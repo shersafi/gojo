@@ -119,11 +119,6 @@ export default class HelpCommand extends Command {
           {
             name: '`clear`',
             value: '**Admin** - Clear a number of messages in chat. `,clear 20`'
-          },
-          {
-            name: 'Wiki',
-            value:
-              'Read the [wiki](https://github.com/dxnter/lasty/wiki/Commands) for additional help and examples'
           }
         ])
         .setColor(EMBED_COLOR)
