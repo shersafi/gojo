@@ -32,13 +32,13 @@ export default class AvCommand extends Command {
             format: member.user.avatar.startsWith('a_') ? 'gif' : 'png',
             size: 2048
         });
-
-        const embed = new MessageEmbed()
+        return message.embed(
+            new MessageEmbed()
             .setAuthor(`${member.user.tag}`, avatar)
             .setColor(member.displayHexColor ? member.displayHexColor : EMBED_COLOR)
             .setDescription(`[Avatar URL](${avatar})`)
             .setImage(avatar)
-        return message.channel.send({ embed });
+        );    
     }
 
 }
