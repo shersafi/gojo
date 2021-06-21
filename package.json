@@ -11,8 +11,8 @@
     "url": "https://github.com/shersafi/gojo/issues"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "2.1.x"
+    "node": "14.17.0",
+    "npm": "7.18.1"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run prepare && node dist/src/index.js",
