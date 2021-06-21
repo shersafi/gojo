@@ -1,35 +1,14 @@
 {
-  "name": "gojo",
+  "name": "projgojo",
   "version": "1.0.0",
-  "description": "Win",
-  "main": "dist/src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shersafi/gojo"
-  },
-  "bugs": {
-    "url": "https://github.com/shersafi/gojo/issues"
-  },
-  "engines": {
-    "node": "14.17.0",
-    "npm": "7.18.1"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "clean": "shx rm -rf dist/",
-    "start": "node dist/src/index.js",
-    "compile": "tsc || exit 0",
-    "prepare": "npm run clean && npm run compile"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/src/index.js"
   },
-  "keywords": [
-    "bot",
-    "discord",
-    "Commando",
-    "discord.js-comando",
-    "TypeScript",
-    "lastfm"
-  ],
-  "author": "Danny <contact@danfoster.io> (https://danny.sh)",
-  "license": "GPL-3.0",
+  "author": "Sher",
+  "license": "ISC",
   "dependencies": {
     "@settlin/collage": "^1.4.7",
     "@types/lowdb": "^1.0.9",
@@ -42,6 +21,7 @@
     "discord.js-commando": "git+https://github.com/discordjs/Commando.git",
     "esm": "^3.2.25",
     "lowdb": "^1.0.0",
+    "path": "^0.12.7",
     "typescript": "^4.1.2"
   },
   "devDependencies": {
