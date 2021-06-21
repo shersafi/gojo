@@ -4,3 +4,4 @@ build/
 config.json
 jsconfig.json
 **/db.json
+package-lock.json
