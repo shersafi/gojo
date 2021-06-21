@@ -1,16 +1,12 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, User } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { PREFIX, EMBED_COLOR } from '../../../config.json';
-
-interface user {
-    username: string;
-  }
+import { EMBED_COLOR } from '../../../config.json';
 
 export default class AvCommand extends Command {
     constructor(client: CommandoClient) {
         super(client, {
           name: 'avatar',
-          aliases: ['dp', 'av', 'picture', 'ava', ],
+          aliases: ['dp', 'av', 'picture', 'ava'],
           memberName: 'avatar',
           group: 'util',
           description: "Shows an avatar's display picture.",
@@ -22,16 +18,16 @@ export default class AvCommand extends Command {
           },
           args: [{
             key: 'member',
-            prompt: 'whose avatar u tryna stalk lmfao',
+            prompt: 'whose av u tryna stalk lmfao',
             type: 'member',
             default: ''
             }]
         });
     }
 
-    run(message: CommandoMessage, args: any) {
+    async run(message: CommandoMessage, args: Record<string, any>) {
         const member = args.member || message.author;
-        if (!member.user.avatar) return message.channel.send('This user does not have an avatar wasteman');
+        if (!member.user.avatar) return message.channel.send('doesnt exist dumbass');
         const avatar = member.user.avatarURL({
             format: member.user.avatar.startsWith('a_') ? 'gif' : 'png',
             size: 2048
@@ -39,7 +35,7 @@ export default class AvCommand extends Command {
 
         const embed = new MessageEmbed()
             .setAuthor(`${member.user.tag}`, avatar)
-            .setColor(member.displayHexColor ? member.displayHexColor : '#D0C7FF')
+            .setColor(member.displayHexColor ? member.displayHexColor : EMBED_COLOR)
             .setDescription(`[Avatar URL](${avatar})`)
             .setImage(avatar)
         return message.channel.send({ embed });
