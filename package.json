@@ -16,7 +16,7 @@
   },
   "scripts": {
     "clean": "shx rm -rf dist/",
-    "start": "cross-env NODE_ENV=production npm run prepare && node dist/src/index.js",
+    "start": "npm start && node dist/src/index.js",
     "compile": "tsc || exit 0",
     "prepare": "npm run clean && npm run compile"
   },
