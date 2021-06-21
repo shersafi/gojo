@@ -10,6 +10,10 @@
   "bugs": {
     "url": "https://github.com/shersafi/gojo/issues"
   },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "2.1.x"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production npm run prepare && node dist/src/index.js",
     "clean": "shx rm -rf dist/",
