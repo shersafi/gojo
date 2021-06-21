@@ -16,7 +16,7 @@
   },
   "scripts": {
     "clean": "shx rm -rf dist/",
-    "start": "node dist/src/index.js",
+    "start": "node dist/src/index.ts",
     "compile": "tsc || exit 0",
     "prepare": "npm run clean && npm run compile"
   },
