@@ -13,7 +13,7 @@ interface AvatarArgs {
       super(client, {
         name: 'avatar',
         aliases: [ 'ava', 'av', 'avi', 'dp' ],
-        group: 'info',
+        group: 'util',
         memberName: 'avatar',
         description: 'Gets the avatar from a user',
         format: 'MemberID|MemberName(partial or full) [ImageSize]',
