@@ -29,7 +29,7 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
         })
             .registerCommandsIn({
             filter: /^([^.].*)\.(js|ts)$/,
-            dirname: path_1.default.join(__dirname, "commands"),
+            dirname: path_1.default.join(__dirname, '../commands'),
         });
         this.on('ready', () => require('../events/ready')(this));
         this.on('messageReactionAdd', async (reaction) => {

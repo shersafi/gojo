@@ -5,7 +5,6 @@ import { CommandoClient } from 'discord.js-commando';
 import path from 'path';
 import { PREFIX,  DISCORD_BOT_TOKEN } from '../../config.json';
 
-
 export default class LastyClient extends CommandoClient {
   public constructor() {
     super({
@@ -30,7 +29,7 @@ export default class LastyClient extends CommandoClient {
       })
       .registerCommandsIn({
         filter: /^([^.].*)\.(js|ts)$/,
-        dirname: path.join(__dirname, "commands"),
+        dirname: path.join(__dirname, '../commands'),
       });
       
 
