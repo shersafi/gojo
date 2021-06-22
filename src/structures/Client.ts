@@ -31,7 +31,7 @@ export default class LastyClient extends CommandoClient {
       // .registerCommandsIn(path.join(__dirname, '../commands'));
       .registerCommandsIn({
         filter: /^([^.].*)\.(js|ts)$/,
-        dirname: path.join(__dirname, "commands"),
+        dirname: path.join(__dirname, '../commands'),
       });
 
     this.on('ready', () => require('../events/ready')(this));
