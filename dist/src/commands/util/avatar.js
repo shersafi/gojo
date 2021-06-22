@@ -3,41 +3,54 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const discord_js_commando_1 = require("discord.js-commando");
 const config_json_1 = require("../../../config.json");
-class AvCommand extends discord_js_commando_1.Command {
+const Utilities_1 = require("../../structures/Utilities");
+class AvatarCommand extends discord_js_commando_1.Command {
     constructor(client) {
         super(client, {
             name: 'avatar',
-            aliases: ['dp', 'av', 'picture', 'ava'],
+            aliases: ['ava', 'av', 'avi', 'dp'],
+            group: 'info',
             memberName: 'avatar',
-            group: 'util',
-            description: "Shows an avatar's display picture.",
-            examples: ['~avatar <mention>'],
+            description: 'Gets the avatar from a user',
+            format: 'MemberID|MemberName(partial or full) [ImageSize]',
+            examples: ['avatar saf 2048'],
             guildOnly: true,
             throttling: {
-                usages: 1,
-                duration: 5
+                usages: 2,
+                duration: 3,
             },
-            args: [{
+            args: [
+                {
                     key: 'member',
-                    prompt: 'whose av u tryna stalk lmfao',
+                    prompt: 'What user would you like to get the avatar from?',
                     type: 'member',
-                    default: ''
-                }]
+                    default: (msg) => msg.member,
+                },
+                {
+                    key: 'size',
+                    prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
+                    type: 'integer',
+                    oneOf: [16, 32, 64, 128, 256, 512, 1024, 2048],
+                    default: 2048,
+                }
+            ],
         });
     }
-    async run(msg, args) {
-        const member = args.member || msg.author;
-        if (!member.user.avatar)
-            return msg.channel.send('doesnt exist dumbass');
-        const avatar = member.user.avatarURL({
-            format: member.user.avatar.startsWith('a_') ? 'gif' : 'png',
-            size: 2048
-        });
-        return msg.embed(new discord_js_1.MessageEmbed()
-            .setAuthor(`${member.user.tag}`, avatar)
-            .setColor(member.displayHexColor ? member.displayHexColor : config_json_1.EMBED_COLOR)
-            .setDescription(`[Avatar URL](${avatar})`)
-            .setImage(avatar));
+    async run(msg, { member, size }) {
+        const ava = member.user.displayAvatarURL({ size });
+        const embed = new discord_js_1.MessageEmbed();
+        const ext = this.fetchExt(ava);
+        embed
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : config_json_1.EMBED_COLOR)
+            .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
+            .setTitle(member.displayName)
+            .setURL(ava)
+            .setDescription(`[Avatar URL](${ava})`);
+        Utilities_1.deleteCommandMessages(msg, this.client);
+        return msg.embed(embed);
+    }
+    fetchExt(str) {
+        return str.substring(str.length - 14, str.length - 8);
     }
 }
-exports.default = AvCommand;
+exports.default = AvatarCommand;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteCommandMessages = void 0;
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
 const chalk_1 = tslib_1.__importDefault(require("chalk"));
@@ -7,6 +8,11 @@ const db_1 = tslib_1.__importDefault(require("../db"));
 const lastfm_1 = require("../api/lastfm");
 const constants_1 = require("../constants");
 const config_json_1 = require("../../config.json");
+const deleteCommandMessages = (msg, client) => {
+    if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false))
+        msg.delete();
+};
+exports.deleteCommandMessages = deleteCommandMessages;
 class Utilities {
     static findExistingUser(userID) {
         return db_1.default

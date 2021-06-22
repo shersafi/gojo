@@ -1,44 +1,64 @@
-import { MessageEmbed} from 'discord.js';
+import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { EMBED_COLOR } from '../../../config.json';
+import { deleteCommandMessages } from '../../structures/Utilities';
 
-export default class AvCommand extends Command {
-    constructor(client: CommandoClient) {
-        super(client, {
-          name: 'avatar',
-          aliases: ['dp', 'av', 'picture', 'ava'],
-          memberName: 'avatar',
-          group: 'util',
-          description: "Shows an avatar's display picture.",
-          examples: ['~avatar <mention>'],
-          guildOnly: true,
-          throttling: {
-            usages: 1,
-            duration: 5
-          },
-          args: [{
+interface AvatarArgs {
+    member: GuildMember;
+    size: ImageSize;
+  }
+  
+  export default class AvatarCommand extends Command {
+    public constructor(client: CommandoClient) {
+      super(client, {
+        name: 'avatar',
+        aliases: [ 'ava', 'av', 'avi', 'dp' ],
+        group: 'info',
+        memberName: 'avatar',
+        description: 'Gets the avatar from a user',
+        format: 'MemberID|MemberName(partial or full) [ImageSize]',
+        examples: [ 'avatar saf 2048' ],
+        guildOnly: true,
+        throttling: {
+          usages: 2,
+          duration: 3,
+        },
+        args: [
+          {
             key: 'member',
-            prompt: 'whose av u tryna stalk lmfao',
+            prompt: 'What user would you like to get the avatar from?',
             type: 'member',
-            default: ''
-            }]
-        });
+            default: (msg: CommandoMessage) => msg.member,
+          },
+          {
+            key: 'size',
+            prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
+            type: 'integer',
+            oneOf: [ 16, 32, 64, 128, 256, 512, 1024, 2048 ],
+            default: 2048,
+          }
+        ],
+      });
     }
-
-    async run(msg: CommandoMessage, args: Record<string, any>) {
-        const member = args.member || msg.author;
-        if (!member.user.avatar) return msg.channel.send('doesnt exist dumbass');
-        const avatar = member.user.avatarURL({
-            format: member.user.avatar.startsWith('a_') ? 'gif' : 'png',
-            size: 2048
-        });
-        return msg.embed(
-            new MessageEmbed()
-            .setAuthor(`${member.user.tag}`, avatar)
-            .setColor(member.displayHexColor ? member.displayHexColor : EMBED_COLOR)
-            .setDescription(`[Avatar URL](${avatar})`)
-            .setImage(avatar)
-        );    
+  
+    public async run(msg: CommandoMessage, { member, size }: AvatarArgs) {
+      const ava = member.user.displayAvatarURL({ size });
+      const embed = new MessageEmbed();
+      const ext = this.fetchExt(ava);
+  
+      embed
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : EMBED_COLOR)
+        .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
+        .setTitle(member.displayName)
+        .setURL(ava)
+        .setDescription(`[Avatar URL](${ava})`);
+  
+      deleteCommandMessages(msg, this.client);
+  
+      return msg.embed(embed);
     }
-
-}
+  
+    private fetchExt(str: string) {
+      return str.substring(str.length - 14, str.length - 8);
+    }
+  }

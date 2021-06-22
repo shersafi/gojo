@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { CommandoMessage } from 'discord.js-commando';
+import { CommandoMessage, CommandoClient } from 'discord.js-commando';
 import chalk from 'chalk';
 import db, { User } from '../db';
 import { isValidToken } from '../api/lastfm';
@@ -43,6 +43,9 @@ interface embedArgs {
   albumName: string;
   wkArg: string;
 }
+export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClient) => {
+  if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
+};
 
 export default class Utilities {
   static findExistingUser(userID: string): User {
