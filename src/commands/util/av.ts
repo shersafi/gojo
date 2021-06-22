@@ -2,7 +2,7 @@ import { Message, MessageEmbed, User } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { EMBED_COLOR } from '../../../config.json';
 
-export default class AvCommand extends Command {
+module.exports = class AvCommand extends Command {
     constructor(client: CommandoClient) {
         super(client, {
           name: 'avatar',
