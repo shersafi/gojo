@@ -1,4 +1,4 @@
-import { Message, MessageEmbed} from 'discord.js';
+import { MessageEmbed} from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { EMBED_COLOR } from '../../../config.json';
 
@@ -25,7 +25,7 @@ export default class AvCommand extends Command {
         });
     }
 
-    async run(msg: CommandoMessage, args: Record<string, any>): Promise<Message | Message[]> {
+    async run(msg: CommandoMessage, args: Record<string, any>) {
         const member = args.member || msg.author;
         if (!member.user.avatar) return msg.channel.send('doesnt exist dumbass');
         const avatar = member.user.avatarURL({
