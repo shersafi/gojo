@@ -1,4 +1,3 @@
 node_modules/
 build/
 jsconfig.json
-**/db.json

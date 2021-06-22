@@ -1,9 +1,5 @@
-import { DiscordAPIError, MessageEmbed } from 'discord.js';
-import { Message } from "discord.js";
+import { MessageEmbed } from 'discord.js';
 import { TextChannel } from 'discord.js';
-import { Channel } from 'discord.js';
-import { GuildChannelManager } from 'discord.js';
-import Discord from "discord.js";
 import clown from '../../clown.json';
 import { CommandoClient } from 'discord.js-commando';
 import path from 'path';

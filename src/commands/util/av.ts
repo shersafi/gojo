@@ -26,6 +26,7 @@ export default class AvCommand extends Command {
     }
 
     async run(message: CommandoMessage, args: Record<string, any>) {
+        console.log('test');
         const member = args.member || message.author;
         if (!member.user.avatar) return message.channel.send('doesnt exist dumbass');
         const avatar = member.user.avatarURL({
