@@ -1,14 +1,14 @@
-import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
+import { GuildMember, ImageSize, MessageEmbed, Message } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { EMBED_COLOR } from '../../../config.json';
-import { deleteCommandMessages } from '../../structures/Utilities';
+// import { deleteCommandMessages } from '../../structures/Utilities';
 
 interface AvatarArgs {
     member: GuildMember;
     size: ImageSize;
   }
   
-  export default class AvatarCommand extends Command {
+export default class AvatarCommand extends Command {
     public constructor(client: CommandoClient) {
       super(client, {
         name: 'avatar',
@@ -33,15 +33,15 @@ interface AvatarArgs {
           {
             key: 'size',
             prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
-            type: 'number',
-            oneOf: [ 16, 32, 64, 128, 256, 512, 1024, 2048 ],
-            default: '2048',
+            type: 'integer',
+            oneOf: [ 16, 32, 64, 128, 256, 512, 1024, 2048 ], 
+            default: 2048,
           }
         ],
       });
     }
   
-    public async run(msg: CommandoMessage, { member, size }: AvatarArgs) {  
+    async run(msg: CommandoMessage, { member, size }: AvatarArgs) {
       const ava = member.user.displayAvatarURL({ size });
       const embed = new MessageEmbed();
       const ext = this.fetchExt(ava);
@@ -52,13 +52,15 @@ interface AvatarArgs {
         .setTitle(member.displayName)
         .setURL(ava)
         .setDescription(`[Avatar URL](${ava})`);
+
+     
   
-      deleteCommandMessages(msg, this.client);
-  
+    //   deleteCommandMessages(msg, this.client);
+    //   console.log('here');
       return msg.embed(embed);
     }
   
     private fetchExt(str: string) {
       return str.substring(str.length - 14, str.length - 8);
     }
-  }
+}

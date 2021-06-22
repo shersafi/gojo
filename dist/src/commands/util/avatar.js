@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const discord_js_commando_1 = require("discord.js-commando");
 const config_json_1 = require("../../../config.json");
-const Utilities_1 = require("../../structures/Utilities");
 class AvatarCommand extends discord_js_commando_1.Command {
     constructor(client) {
         super(client, {
@@ -29,9 +28,9 @@ class AvatarCommand extends discord_js_commando_1.Command {
                 {
                     key: 'size',
                     prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
-                    type: 'number',
+                    type: 'integer',
                     oneOf: [16, 32, 64, 128, 256, 512, 1024, 2048],
-                    default: '2048',
+                    default: 2048,
                 }
             ],
         });
@@ -46,7 +45,8 @@ class AvatarCommand extends discord_js_commando_1.Command {
             .setTitle(member.displayName)
             .setURL(ava)
             .setDescription(`[Avatar URL](${ava})`);
-        Utilities_1.deleteCommandMessages(msg, this.client);
+        //   deleteCommandMessages(msg, this.client);
+        //   console.log('here');
         return msg.embed(embed);
     }
     fetchExt(str) {
