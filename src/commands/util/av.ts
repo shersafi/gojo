@@ -25,15 +25,15 @@ export default class AvCommand extends Command {
         });
     }
 
-    async run(message: CommandoMessage, args: Record<string, any>) {
+    async run(msg: CommandoMessage, args: Record<string, any>): Promise<Message | Message[]> {
         console.log('test');
-        const member = args.member || message.author;
-        if (!member.user.avatar) return message.channel.send('doesnt exist dumbass');
+        const member = args.member || msg.author;
+        if (!member.user.avatar) return msg.channel.send('doesnt exist dumbass');
         const avatar = member.user.avatarURL({
             format: member.user.avatar.startsWith('a_') ? 'gif' : 'png',
             size: 2048
         });
-        return message.embed(
+        return msg.embed(
             new MessageEmbed()
             .setAuthor(`${member.user.tag}`, avatar)
             .setColor(member.displayHexColor ? member.displayHexColor : EMBED_COLOR)
