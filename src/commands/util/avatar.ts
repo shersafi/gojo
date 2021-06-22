@@ -35,13 +35,13 @@ interface AvatarArgs {
             prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
             type: 'integer',
             oneOf: [ '16', '32', '64', '128', '256', '512', '1024', '2048' ],
-            default: '2048',
+            default: 2048,
           }
         ],
       });
     }
   
-    public async run(msg: CommandoMessage, { member, size }: AvatarArgs) {
+    public async run(msg: CommandoMessage, { member, size }: AvatarArgs) {  
       const ava = member.user.displayAvatarURL({ size });
       const embed = new MessageEmbed();
       const ext = this.fetchExt(ava);
