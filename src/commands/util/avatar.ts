@@ -1,4 +1,4 @@
-import { GuildMember, ImageSize, MessageEmbed, Message } from 'discord.js';
+import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { EMBED_COLOR } from '../../../config.json';
 // import { deleteCommandMessages } from '../../structures/Utilities';
