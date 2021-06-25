@@ -17,6 +17,7 @@ export default class LastyClient extends CommandoClient {
   init() {
     this.registry
       .registerDefaultTypes()
+      .registerTypesIn(path.join(__dirname, '../types'))
       .registerGroups([
         ['lastfm', 'Last.fm'],
         ['util', 'Util'],

@@ -17,6 +17,7 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
     init() {
         this.registry
             .registerDefaultTypes()
+            .registerTypesIn(path_1.default.join(__dirname, '../types'))
             .registerGroups([
             ['lastfm', 'Last.fm'],
             ['util', 'Util'],

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const index_1 = require("../../constants/index");
 const Utilities_1 = require("../../structures/Utilities");
 const discord_js_commando_1 = require("discord.js-commando");
 const discord_js_1 = require("discord.js");
@@ -43,16 +42,22 @@ class MuteCommand extends discord_js_commando_1.Command {
     async run(msg, { member, duration, logs }) {
         if (member.manageable) {
             try {
-                const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-                const muteRole = msg.guild.settings.get('muterole', msg.guild.roles.cache.find(r => r.name === 'muted') ? msg.guild.roles.cache.find(r => r.name === 'muted') : null);
+                // const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+                // const muteRole = msg.guild.settings.get('muterole',
+                //   msg.guild.roles.cache.find(r => r.name === 'muted') ? msg.guild.roles.cache.find(r => r.name === 'muted') : null);
+                // const muteRole = msg.guild.roles.cache.find(r => r.name === "muted");
+                const mutedRole = msg.guild.roles.cache.get('857395974070468610');
+                if (!mutedRole) {
+                    return msg.channel.send('no muted role lmao');
+                }
                 const muteEmbed = new discord_js_1.MessageEmbed();
-                await member.roles.add(muteRole);
+                await member.roles.add(mutedRole);
                 muteEmbed
                     .setColor('#AAEFE6')
                     .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                     .setDescription(common_tags_1.stripIndents `
                         **Action:** Muted <@${member.id}>
-                        **Duration:** ${duration ? moment_1.default.duration(duration).format(index_1.DURA_FORMAT.slice(5)) : 'Until manually removed'}`)
+                        `)
                     .setTimestamp();
                 // if (msg.guild.settings.get('modlogs', true)) {
                 //   logModMessage(
@@ -64,7 +69,7 @@ class MuteCommand extends discord_js_commando_1.Command {
                 const muteMessage = await msg.embed(muteEmbed);
                 if (duration) {
                     setTimeout(async () => {
-                        await member.roles.remove(muteRole);
+                        await member.roles.remove(mutedRole);
                         muteEmbed.setDescription(common_tags_1.stripIndents `
                             **Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`);
                         // if (logs) {
@@ -77,19 +82,18 @@ class MuteCommand extends discord_js_commando_1.Command {
                 return muteMessage;
             }
             catch (err) {
-                Utilities_1.deleteCommandMessages(msg, this.client);
+                // deleteCommandMessages(msg, this.client);
                 if (/(?:Missing Permissions)/i.test(err.toString())) {
                     return msg.reply(common_tags_1.stripIndents `an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
                 }
-                const channel = this.client.channels.cache.get(process.env.ISSUE_LOG_CHANNEL_ID);
+                const channel = this.client.channels.cache.get('857390754380775435');
                 channel.send(common_tags_1.stripIndents `
           <@${this.client.owners[0].id}> Error occurred in \`mute\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
           **Author:** ${msg.author.tag} (${msg.author.id})
           **Time:** ${moment_1.default(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Member:** \`${member.user.username} (${member.id})\`
-          **Duration:** ${duration ? moment_1.default.duration(duration).format(index_1.DURA_FORMAT.slice(5)) : null}
           **Error Message:** ${err}`);
                 return msg.reply(common_tags_1.oneLine `
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.

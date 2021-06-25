@@ -1,5 +1,5 @@
 import { DURA_FORMAT } from '../../constants/index';
-import { deleteCommandMessages, logModMessage, shouldHavePermission } from '../../structures/Utilities';
+import { shouldHavePermission } from '../../structures/Utilities';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
@@ -49,19 +49,26 @@ export default class MuteCommand extends Command {
   public async run(msg: CommandoMessage, { member, duration, logs }: MuteArgs) {
     if (member.manageable) {
       try {
-        const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const muteRole = msg.guild.settings.get('muterole',
-          msg.guild.roles.cache.find(r => r.name === 'muted') ? msg.guild.roles.cache.find(r => r.name === 'muted') : null);
+        // const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+        // const muteRole = msg.guild.settings.get('muterole',
+        //   msg.guild.roles.cache.find(r => r.name === 'muted') ? msg.guild.roles.cache.find(r => r.name === 'muted') : null);
+        // const muteRole = msg.guild.roles.cache.find(r => r.name === "muted");
+        const mutedRole = msg.guild.roles.cache.get('857395974070468610');
+
+        if (!mutedRole) {
+          return msg.channel.send('no muted role lmao');
+        }
+
         const muteEmbed = new MessageEmbed();
 
-        await member.roles.add(muteRole);
+        await member.roles.add(mutedRole);
 
         muteEmbed
           .setColor('#AAEFE6')
           .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
           .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
-                        **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : 'Until manually removed'}`)
+                        `)
           .setTimestamp();
 
         // if (msg.guild.settings.get('modlogs', true)) {
@@ -77,7 +84,7 @@ export default class MuteCommand extends Command {
 
         if (duration) {
           setTimeout(async () => {
-            await member.roles.remove(muteRole);
+            await member.roles.remove(mutedRole);
             muteEmbed.setDescription(stripIndents`
                             **Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`);
             // if (logs) {
@@ -91,12 +98,12 @@ export default class MuteCommand extends Command {
 
         return muteMessage;
       } catch (err) {
-        deleteCommandMessages(msg, this.client);
+        // deleteCommandMessages(msg, this.client);
         if (/(?:Missing Permissions)/i.test(err.toString())) {
           return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
         }
-        const channel = this.client.channels.cache.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+        const channel = this.client.channels.cache.get('857390754380775435') as TextChannel;
 
         channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`mute\` command!
@@ -104,7 +111,6 @@ export default class MuteCommand extends Command {
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Member:** \`${member.user.username} (${member.id})\`
-          **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : null}
           **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
