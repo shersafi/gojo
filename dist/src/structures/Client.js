@@ -10,7 +10,8 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
     constructor() {
         super({
             commandPrefix: config_json_1.PREFIX,
-            disableMentions: 'everyone'
+            disableMentions: 'everyone',
+            owner: '720425517295075422'
         });
     }
     init() {
@@ -18,14 +19,16 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
             .registerDefaultTypes()
             .registerGroups([
             ['lastfm', 'Last.fm'],
-            ['util', 'Util']
+            ['util', 'Util'],
+            ['bot', 'Bot'],
+            ['moderator', 'Moderator']
         ])
             .registerDefaultCommands({
             help: false,
             ping: false,
             prefix: true,
             commandState: false,
-            unknownCommand: false
+            unknownCommand: false,
         })
             .registerCommandsIn({
             filter: /^([^.].*)\.(js|ts)$/,

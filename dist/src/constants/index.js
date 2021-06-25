@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PERMISSION_INVALID = exports.EMBED_SIZE_EXCEEDED_RECENT = exports.TRACK_NOT_FOUND = exports.NOT_ENOUGH_LISTENERS = exports.EMPTY_LISTENING_DATA = exports.PERIOD_INVALID = exports.ARTIST_NOT_FOUND = exports.ARTIST_INVALID = exports.ALBUM_NOT_FOUND = exports.ALBUM_INVALID = exports.ALBUM_UNDEFINED = exports.ARTIST_UNDEFINED = exports.USER_UNREGISTERED = exports.USER_ALREADY_UNSUBSCRIBED = exports.USER_ALREADY_SUBSCRIBED = exports.USER_UNSUBSCRIBED = exports.USER_SUBSCRIBED = exports.USER_DELETED = exports.USER_UPDATED = exports.USER_EXISTS = exports.USER_SET = exports.USER_UNDEFINED_ALBUM_ARGS = exports.USER_UNDEFINED_ARGS = exports.USER_UNDEFINED = exports.SUCCESS = exports.ERROR = exports.READABLE_PERIODS = exports.PERIOD_PARAMS = exports.LASTFM_API_URL = void 0;
+exports.DURA_FORMAT = exports.PERMISSION_INVALID = exports.EMBED_SIZE_EXCEEDED_RECENT = exports.TRACK_NOT_FOUND = exports.NOT_ENOUGH_LISTENERS = exports.EMPTY_LISTENING_DATA = exports.PERIOD_INVALID = exports.ARTIST_NOT_FOUND = exports.ARTIST_INVALID = exports.ALBUM_NOT_FOUND = exports.ALBUM_INVALID = exports.ALBUM_UNDEFINED = exports.ARTIST_UNDEFINED = exports.USER_UNREGISTERED = exports.USER_ALREADY_UNSUBSCRIBED = exports.USER_ALREADY_SUBSCRIBED = exports.USER_UNSUBSCRIBED = exports.USER_SUBSCRIBED = exports.USER_DELETED = exports.USER_UPDATED = exports.USER_EXISTS = exports.USER_SET = exports.USER_UNDEFINED_ALBUM_ARGS = exports.USER_UNDEFINED_ARGS = exports.USER_UNDEFINED = exports.SUCCESS = exports.ERROR = exports.READABLE_PERIODS = exports.PERIOD_PARAMS = exports.LASTFM_API_URL = void 0;
 exports.LASTFM_API_URL = 'http://ws.audioscrobbler.com/2.0/?method=';
 exports.PERIOD_PARAMS = {
     week: '7day',
@@ -44,3 +44,4 @@ exports.NOT_ENOUGH_LISTENERS = 'NOT_ENOUGH_LISTENERS';
 exports.TRACK_NOT_FOUND = 'TRACK_NOT_FOUND';
 exports.EMBED_SIZE_EXCEEDED_RECENT = 'EMBED_SIZE_EXCEEDED_RECENT';
 exports.PERMISSION_INVALID = 'PERMISSION_INVALID';
+exports.DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';

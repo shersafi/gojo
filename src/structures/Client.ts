@@ -9,7 +9,8 @@ export default class LastyClient extends CommandoClient {
   public constructor() {
     super({
       commandPrefix: PREFIX,
-      disableMentions: 'everyone'
+      disableMentions: 'everyone',
+      owner: '720425517295075422'
     });
   }
 
@@ -18,14 +19,16 @@ export default class LastyClient extends CommandoClient {
       .registerDefaultTypes()
       .registerGroups([
         ['lastfm', 'Last.fm'],
-        ['util', 'Util']
+        ['util', 'Util'],
+        ['bot', 'Bot'],
+        ['moderator', 'Moderator']
       ])
       .registerDefaultCommands({
         help: false,
         ping: false,
         prefix: true,
         commandState: false,
-        unknownCommand: false
+        unknownCommand: false,
       })
       .registerCommandsIn({
         filter: /^([^.].*)\.(js|ts)$/,

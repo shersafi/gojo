@@ -44,3 +44,4 @@ export const NOT_ENOUGH_LISTENERS = 'NOT_ENOUGH_LISTENERS';
 export const TRACK_NOT_FOUND = 'TRACK_NOT_FOUND';
 export const EMBED_SIZE_EXCEEDED_RECENT = 'EMBED_SIZE_EXCEEDED_RECENT';
 export const PERMISSION_INVALID = 'PERMISSION_INVALID';
+export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';  

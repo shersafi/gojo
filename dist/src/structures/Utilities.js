@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCommandMessages = void 0;
+exports.shouldHavePermission = exports.logModMessage = exports.deleteCommandMessages = void 0;
 const tslib_1 = require("tslib");
 const discord_js_1 = require("discord.js");
+const discord_js_commando_1 = require("discord.js-commando");
 const chalk_1 = tslib_1.__importDefault(require("chalk"));
 const db_1 = tslib_1.__importDefault(require("../db"));
 const lastfm_1 = require("../api/lastfm");
@@ -13,6 +14,40 @@ const deleteCommandMessages = (msg, client) => {
         msg.delete();
 };
 exports.deleteCommandMessages = deleteCommandMessages;
+const logModMessage = async (msg, guild, outChannelID, outChannel, embed) => {
+    if (!guild.settings.get('hasSentModLogMessage', false)) {
+        msg.reply(oneLine `
+            📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+            (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
+            This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+        guild.settings.set('hasSentModLogMessage', true);
+    }
+    return outChannelID && guild.settings.get('modlogs', false)
+        ? outChannel.send('', { embed })
+        : null;
+};
+exports.logModMessage = logModMessage;
+const shouldHavePermission = (permission, shouldClientHavePermission = false) => {
+    return (target, propertyKey, descriptor) => {
+        const fn = descriptor.value;
+        descriptor.value = async function value(msg, args, fromPattern) {
+            const authorIsOwner = msg.client.isOwner(msg.author);
+            const memberHasPermission = msg.member.hasPermission(permission);
+            if (!memberHasPermission && !authorIsOwner) {
+                return msg.command.onBlock(msg, 'permission', { response: `You need the "${discord_js_commando_1.util.permissions[permission]}" permission to use the ${msg.command.name} command` });
+            }
+            if (shouldClientHavePermission) {
+                const clientHasPermission = msg.channel.permissionsFor(msg.client.user).has(permission);
+                if (!clientHasPermission) {
+                    return msg.command.onBlock(msg, 'clientPermissions', { missing: [permission] });
+                }
+            }
+            return fn.apply(this, [msg, args, fromPattern]);
+        };
+        return descriptor;
+    };
+};
+exports.shouldHavePermission = shouldHavePermission;
 class Utilities {
     static findExistingUser(userID) {
         return db_1.default
