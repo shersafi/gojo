@@ -30,7 +30,6 @@ export default class LastyClient extends CommandoClient {
         commandState: false,
         unknownCommand: false,
       })
-      .registerDefaultTypes()
       .registerCommandsIn({
         filter: /^([^.].*)\.(js|ts)$/,
         dirname: path.join(__dirname, '../commands'),
