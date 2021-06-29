@@ -60,7 +60,7 @@ export default class LastyClient extends CommandoClient {
             .setColor('#c9befb')
             .setAuthor(user.tag, user.displayAvatarURL())
             .setTimestamp()
-            .setFooter(`🤡 ${fetch.size} | ${reaction.message.id}`)
+            .setFooter(`🤡 ${(fetch.size) + 1} | ${reaction.message.id}`)
             .setDescription(reaction.message.content)
             .addField('#' + (chan as TextChannel).name, `[Jump to message](${url})`);
           

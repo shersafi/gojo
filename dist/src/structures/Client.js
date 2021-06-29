@@ -48,7 +48,7 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
                     .setColor('#c9befb')
                     .setAuthor(user.tag, user.displayAvatarURL())
                     .setTimestamp()
-                    .setFooter(`🤡 ${fetch.size} | ${reaction.message.id}`)
+                    .setFooter(`🤡 ${(fetch.size) + 1} | ${reaction.message.id}`)
                     .setDescription(reaction.message.content)
                     .addField('#' + chan.name, `[Jump to message](${url})`);
                 clownboard.send(embed);
