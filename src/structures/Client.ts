@@ -4,8 +4,6 @@ import { CommandoClient } from 'discord.js-commando';
 import path from 'path';
 import { PREFIX,  DISCORD_BOT_TOKEN } from '../../config.json';
 
-import clowncount from '../clowncount.json';
-
 export default class LastyClient extends CommandoClient {
   public constructor() {
     super({
