@@ -48,21 +48,21 @@ export default class LastyClient extends CommandoClient {
       
         if (reaction.emoji.name === '🤡') {
 
-          const clownCount = clowncount['count'] + 1;
-
-          clowncount['count'] = clownCount;
-
+          
           const msg = reaction.message;
           const user = reaction.message.author;
           const url = reaction.message.url;
           const chan = reaction.message.channel;
           const clownboard = msg.guild?.channels.cache.find(channel => channel.id == '855944224071221258');
           
+          const fetch = await (clownboard as TextChannel).messages.fetch({ limit: 100 }); 
+
+
           const embed = new MessageEmbed()
             .setColor('#c9befb')
             .setAuthor(user.tag, user.displayAvatarURL())
             .setTimestamp()
-            .setFooter(`🤡 ${clownCount} | ${reaction.message.id}`)
+            .setFooter(`🤡 ${fetch.size} | ${reaction.message.id}`)
             .setDescription(reaction.message.content)
             .addField('#' + (chan as TextChannel).name, `[Jump to message](${url})`);
           
