@@ -36,17 +36,18 @@ export default class LastyClient extends CommandoClient {
       });
       
 
-    this.on('ready', () => require('../events/ready')(this));
+    this.on('ready', () => {
+      require('../events/ready')(this); 
+    });
 
+    
      
 
 
     this.on('messageReactionAdd', async (reaction) => {
 
-      
         if (reaction.emoji.name === '🤡') {
 
-          
           const msg = reaction.message;
           const user = reaction.message.author;
           const url = reaction.message.url;

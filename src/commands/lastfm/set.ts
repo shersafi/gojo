@@ -34,6 +34,7 @@ export default class SetCommand extends Command {
     msg: CommandoMessage,
     { fmUser }: SetArg
   ): Promise<Message | Message[]> {
+
     const existingUser = Utilities.findExistingUser(msg.author.id);
 
     if (existingUser) {

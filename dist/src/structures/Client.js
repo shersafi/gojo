@@ -34,7 +34,9 @@ class LastyClient extends discord_js_commando_1.CommandoClient {
             filter: /^([^.].*)\.(js|ts)$/,
             dirname: path_1.default.join(__dirname, '../commands'),
         });
-        this.on('ready', () => require('../events/ready')(this));
+        this.on('ready', () => {
+            require('../events/ready')(this);
+        });
         this.on('messageReactionAdd', async (reaction) => {
             var _a;
             if (reaction.emoji.name === '🤡') {
